@@ -1,0 +1,11 @@
+beans\experts\ResultExperts.class
+utils\EmailSender$1.class
+utils\EmailSender.class
+beans\EditBean.class
+beans\SendMsgBean.class
+beans\Name.class
+beans\UserBean.class
+scopus\ScopusParser.class
+scopus\Person.class
+beans\experts\Expert.class
+beans\TestBean.class

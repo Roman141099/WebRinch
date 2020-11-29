@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+    <h:form>
+        <h:outputText value="Введите код активации"/>
+        <br><h:inputText value="#{sendBean.inputCode}"/></br>
+        <br><h:commandButton value="Проверить" action="#{sendBean.sendRedirectIfOk}"/></br>
+        <br><h:outputText value="#{editBean.smb.confirmCode}"/></br>
+        <!--        <h:commandButton value="Hello" rendered="true" action="log-in?faces-redirect=true"/>-->
+        <!--        <h:button value="Done" outcome="reg.xhtml?faces-redirect=true" includeViewParams="true">-->
+        <!--            <f:param name="q" value="Go"/>-->
+        <!--        </h:button>-->
+        <!--        <f:metadata>-->
+        <!--            <f:viewParam name="q" value="#{sendBean.confirmCode}"/>-->
+        <!--        </f:metadata>-->
+        <!--        <h:link outcome="test.xhtml" value="Go">-->
+        <!--            <f:param name="q" value="#{sendBean.confirmCode + 1}"/>-->
+        <!--        </h:link>-->
+        <h:commandButton value="GO" action="test?faces-redirect=true">
+            <h:selectManyListbox value="#{test.selected}">
+                <f:selectItems value="#{test.item}"/>
+            </h:selectManyListbox>
+        </h:commandButton>
+        <h:dataTable value="#{test.table}" var="tables">
+            <h:column>
+                #{tables.first}
+            </h:column>
+            <h:column>
+                #{tables.last}
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

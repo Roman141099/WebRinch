@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <script type="text/javascript">
+        var CompetenseList = {
+            'FrontendDeveloper': 'FrontendDeveloper',
+            'BackDeveloper': 'BackDeveloper',
+            'WebDesiner': 'Веб Дизайнер',
+            'Analist': 'Аналитик',
+            'FrontendDevelopersdsa': 'FrontendDeveloperase',
+            'BackDevelopersas': 'BackDeveloperasd',
+            'WebDesinerads': 'Дизайн',
+            'Analistsda': 'Аналитика',
+        }
+        var InterestList = {
+            'i1': 'Компьютерные науки',
+            'i2': 'Инженерное дело',
+            'i3': 'Энергетика',
+            'i4': 'Физика и астрономия',
+            'i5': 'Математика',
+            'i6': 'Химия',
+            'i7': 'Материаловедение',
+            'i8': 'Медицина',
+            'i9': 'Бизнес',
+            'i10': 'Исскуство',
+            'i11': 'Мультидисциплинарный',
+            'i12': 'Менеджмент',
+            'i13': 'Экономика и финансы',
+            'i14': 'Иммунология и микробиология',
+            'i15': 'Фармакология, токсикология и фармацевтика',
+        }
+        var comp = 0;
+        var interest = 0;
+        var FreeInterest = {};
+        var FreeCompetense = {};
+        Object.assign(FreeCompetense, CompetenseList);
+        Object.assign(FreeInterest, InterestList);
+        var SelectedCompetense = {};
+        var SelectedInterest = {};
+        // console.log(CompetenseList);
+        // console.log(FreeCompetense);
+        // console.log(SelectedCompetense);
+        var closeID = (id) => {
+            document.getElementById(id).style.display = "none";
+        }
+        var openID = (id) => {
+            document.getElementById(id).style.display = "block";
+        }
+        var RemoveFromSelected = (element) => {
+            var id = element.parentNode.id.substring(0, element.parentNode.id.length - 1);
+            FreeCompetense[id] = CompetenseList[id];
+            addFreeCompetent(id, CompetenseList[id]);
+            delete SelectedCompetense[element.id];
+            removeInputFromForm(id);
+            document.getElementById(element.parentNode.id).remove();
+        }
+        var SelectCompetent = (element) => {
+            SelectedCompetense[element.id] = CompetenseList[element.id];
+            addSelectedCompetent(element.id + 'S', CompetenseList[element.id]);
+            addInputToForm('comp' + comp, element.id, CompetenseList[element.id]);
+            comp++;
+            delete FreeCompetense[element.id];
+            document.getElementById(element.id).remove();
+        }
+        var RemoveFromSelectedInterest = (element) => {
+            var id = element.parentNode.id.substring(0, element.parentNode.id.length - 1);
+            FreeInterest[id] = InterestList[id];
+            addFreeInterest(id, InterestList[id]);
+            delete SelectedInterest[element.id];
+            removeInputFromForm(id);
+            document.getElementById(element.parentNode.id).remove();
+        }
+        var SelectInterest = (element) => {
+            SelectedInterest[element.id] = InterestList[element.id];
+            addSelectedInterest(element.id + 'S', InterestList[element.id]);
+            addInputToForm('interest' + interest, element.id, InterestList[element.id]);
+            interest++;
+            delete FreeInterest[element.id];
+            document.getElementById(element.id).remove();
+        }
+        var getRandomInt = (max) => {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+        var addSelectedCompetent = (id, Name) => {
+            var ret = '&lt;div id=' + id + ' class="SelectedCompetense">' + Name + '&lt;div class="DeleteFromSelected" onclick="RemoveFromSelected(this)">-&lt;/div>&lt;/div>';
+            document.getElementById('SelectedCompeties').innerHTML += ret;
+        }
+        var addFreeCompetent = (id, Name) => {
+            var ret = '&lt;div id=' + id + ' class="Competense" onclick="SelectCompetent(this)">' + Name;
+            document.getElementById('FreeCompeties').innerHTML += ret;
+        }
+        var addSelectedInterest = (id, Name) => {
+            var ret = '&lt;div id=' + id + ' class="SelectedCompetense">' + Name + '&lt;div class="DeleteFromSelected" onclick="RemoveFromSelectedInterest(this)">-&lt;/div>&lt;/div>';
+            document.getElementById('SelectedInterest').innerHTML += ret;
+        }
+        var addFreeInterest = (id, Name) => {
+            var ret = '&lt;div id=' + id + ' class="Competense" onclick="SelectInterest(this)">' + Name;
+            document.getElementById('FreeInterest').innerHTML += ret;
+        }
+        var addInputToForm=(id,key,Name)=>{
+            var ret='&lt;input id="'+key+'input" name='+id+' type="hidden" value="'+Name+'" >';
+            document.cookie = id+'='+Name;
+            document.getElementById('CreateComand').innerHTML += ret;
+        }
+        var removeInputFromForm=(key)=>{
+            delete_cookie(document.getElementById(key+'input').name);
+            document.getElementById(key+'input').remove();
+        }
+        var PrintCompetenseList = (CompetenseList) => {
+            for (let key in InterestList) {
+                addFreeInterest(key, InterestList[key]);
+            }
+            for (let key in CompetenseList) {
+                addFreeCompetent(key, CompetenseList[key]);
+            }
+        }
+        var OpenClosediv = (div) => {
+            if (div.classList.contains('ExpertSmall')) {
+                div.classList.remove('ExpertSmall');
+                div.classList.add('ExpertBig');
+                return;
+            }
+            div.classList.remove('ExpertBig');
+            div.classList.add('ExpertSmall');
+        }
+        window.onload = function () {
+            PrintCompetenseList(CompetenseList);
+        }
+    </script>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            font-weight: bold;
+        }
+
+        #autorise {
+            width: calc(100% - 8px);
+            height: 14px;
+            padding: 4px;
+            font-family: arial;
+            font-size: 14px;
+            background: #f8f9fa;
+        }
+
+        #login {
+            float: right;
+            margin-right: 34px;
+        }
+
+        #all {
+            width: 100%;
+            height: 95vh;
+            background: #f8f9fa;
+        }
+
+        #MainMenu {
+            width: calc(100% - 60px);
+            margin-left: 30px;
+            height: 75px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #43CBFF 10%, #9708CC 100%);
+        }
+
+        #SiteSearch {
+            margin-top: calc(37.5px - 18.75px);
+            float: right;
+            margin-right: 30px;
+            height: 50%;
+            width: 50px;
+            background: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #021B79;
+            transition: 0.5s;
+        }
+
+        #SiteSearch:focus {
+            outline: none;
+            width: 300px;
+        }
+
+        .MenuButton {
+            width: 150px;
+            height: 18px;
+            margin: 10px;
+            color: #fff;
+            padding: calc(75px / 2 - 10px - 9px) 0;
+            font-family: arial;
+            font-size: 18px;
+            text-transform: uppercase;
+            float: left;
+            text-align: center;
+            font-weight: bold;
+            background-size: 200% auto;
+            background-image: linear-gradient(to right, #ffffff 0%, #ffffff 70%, #9708CC 100%); /* Градиент для текста */
+            -webkit-background-clip: text; /* Обрезаем фон по тексту */
+            -webkit-text-fill-color: transparent; /* Прозрачный текст */
+            transition: 0.5s;
+        }
+
+        .MenuButton:hover {
+            cursor: pointer;
+            background-position: right center;
+        }
+
+        .VerticalLine {
+            height: 65px;
+            width: 2px;
+            margin: 5px 0;
+            border-radius: 1px;
+            float: left;
+            background: linear-gradient(to bottom, rgba(256, 256, 256, 0) 0%, #ffffff 50%, rgba(256, 256, 256, 0) 100%);
+        }
+
+        #CreateComand {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: calc(100% - 60px - 20px - 10px);
+            height: calc(100% - 125px);
+            float: left;
+            margin-top: 15px;
+            margin-left: 30px;
+            background: linear-gradient(#fff, #fff) padding-box, /*this is your grey background*/ linear-gradient(135deg, #43CBFF 10%, #9708CC 100%) border-box;
+            padding: 10px;
+            border: 5px solid transparent;
+            border-radius: 20px;
+            display: inline-block;
+            float: left;
+            overflow: auto;
+        }
+
+        #Left {
+            width: calc(100% / 4 - 20px);
+            height: calc(100% - 20px);
+            margin: 10px;
+            float: left;
+        }
+
+        #middle {
+            width: calc(100% / 4 - 20px);
+            height: calc(100% - 20px);
+            margin: 10px;
+            float: left;
+        }
+
+        #Right {
+            width: calc(100% / 2 - 20px);
+            height: calc(100% - 20px);
+            margin: 10px;
+            float: left;
+        }
+
+        .InputField {
+            padding: 15px;
+            width: calc(100% - 30px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 24px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .SelectForm {
+            width: calc(100% - 4px);
+            height: 30px;
+            font-family: arial;
+            font-size: 14px;
+            border-radius: 7px;
+            border-color: #43CBFF;
+            border-width: 2px;
+            transition: 0.5s;
+        }
+
+        .CompetenseSelect {
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+            height: calc(50% - 60px - 30px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow: auto;
+        }
+
+        .SelectForm:focus {
+            outline: none;
+            border-color: #9708CC
+        }
+
+        .SelectForm:hover {
+            cursor: pointer;
+        }
+
+        .Competense {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            background: #ddd;
+            border-radius: 7px;
+            margin: 4px;
+            padding: 3px 15px;
+            width: calc(100% - 8px - 30px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 18px;
+            transition: 0.5s;
+        }
+
+        .Competense:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            background: #f1f1f1;
+            cursor: pointer;
+        }
+
+        .SelectedCompetense {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            background: #ddd;
+            border-radius: 7px;
+            margin: 4px;
+            padding: 3px 15px;
+            width: calc(100% - 8px - 30px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 18px;
+        }
+
+        .DeleteFromSelected {
+            float: right;
+            color: #120a8f;
+            font-size: 18px;
+        }
+
+        .DeleteFromSelected:hover {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .SelectInterest {
+            padding: 15px;
+            width: calc(100% - 30px);
+            height: calc(50% - 53px - 30px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 24px;
+            margin: 10px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        .SelectButton {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: calc(100%);
+            height: 75px;
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: calc(18px + (18 - 14) * ((100vw - 480px) / (1024 - 480)));
+            transition: 0.5s;
+            background-size: 200% auto;
+            background-image: linear-gradient(to right, #43CBFF 0%, #9708CC 51%, #43CBFF 100%);
+            border: 0px solid transparent;
+            border-radius: 10px;
+            display: block;
+            color: #fff;
+        }
+
+        .SelectButton:hover {
+            cursor: pointer;
+            background-position: right center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .SelectButton:focus {
+            outline: none;
+        }
+
+        .SelectExpert {
+            padding: 15px;
+            width: calc(100% - 30px);
+            height: calc(50% - 30px - 10px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 24px;
+            margin: 10px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        .Expert {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            background: #ddd;
+            border-radius: 7px;
+            margin: 4px;
+            padding: 5px 15px;
+            width: calc(100% - 8px - 30px);
+            float: left;
+            color: #120a8f;
+            font-family: arial;
+            font-size: 18px;
+            overflow: hidden;
+        }
+
+        #Exp, #LocExp {
+            display: none;
+        }
+
+        .Expert:hover {
+            cursor: pointer;
+        }
+
+        .ExpertSmall {
+            height: 18px;
+        }
+
+        .ExpertBig {
+            min-height: 18px;
+            background: #e3e3e3;
+        }
+
+        .ExpertSpoiler {
+            transition: 0.5s;
+            border: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0) inset;
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: #120aff;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h:form>
+        <div id="autorise">
+            <div id="login"><h:commandLink action="/auth/reg?faces-redirect=true">Войдите</h:commandLink> или
+                <h:commandLink action="/auth/log-in?faces-redirect=true">авторизируйтесь</h:commandLink></div>
+        </div>
+    </h:form>
+    <div id="all">
+        <div id="MainMenu">
+            <a href="index.html">
+                <div class="MenuButton">Профиль</div>
+            </a>
+            <div class="VerticalLine"></div>
+            <a href="Statistic.html">
+                <div class="MenuButton">Статистика</div>
+            </a>
+            <div class="VerticalLine"></div>
+            <a href="login.html">
+                <div class="MenuButton">Менеджер</div>
+            </a>
+            <div class="VerticalLine"></div>
+            <a href="CreateComand.xhtml">
+                <div class="MenuButton">Создать пати</div>
+            </a>
+            <div class="VerticalLine"></div>
+        </div>
+        <h:form id="CreateComand">
+            <div id="Left">
+                <div class="InputField">
+                    <div style="margin-bottom: 5px">Ключевые слова</div>
+                    <h:inputText type="text" name="Name" id="keyword" value="#{commands.keyWord}" class="SelectForm"/>
+                </div>
+                <div class="InputField CompetenseSelect">
+                    <div style="margin-left: 4px">Компетенции</div>
+                    <div id="FreeCompeties">
+                    </div>
+                </div>
+                <div class="InputField CompetenseSelect">
+                    <div style="margin-left: 4px">Выбранные компетенции</div>
+                    <div id="SelectedCompeties">
+                    </div>
+                </div>
+            </div>
+            <div id="middle">
+                <div class="SelectInterest" style="margin-top: 0px">
+                    Научные интересов
+                    <div id="FreeInterest">
+                    </div>
+                </div>
+                <div class="SelectInterest">
+                    Выбранные интересы
+                    <div id="SelectedInterest">
+                    </div>
+                </div>
+                <h:commandButton action="#{commands.addComp(cookie.get('a').value)}" onclick="openID('Exp'); openID('LocExp'); createOutputFields()" type="submit"
+                                 value="Найти экспертов" class="InputField SelectButton">
+                    <f:ajax execute="keyword" render="out"/>
+                </h:commandButton>
+            </div>
+            <div id="Right">
+                <div class="SelectExpert" style="margin-top: 0px">
+                    Эксперты Scopus
+                    <h:dataTable id="out1" value="#{commands.scopus}" var="scopusExprts">
+                        <h:column>
+                            #{scopusExprts.name}
+                        </h:column>
+                        <h:column>
+                            #{scopusExprts.org}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <div class="SelectExpert">
+                    Сотрудники университета
+                    <h:dataTable id="out" value="#{commands.university}" var="univExperts">
+                        <h:column>
+                            #{univExperts.name}
+                        </h:column>
+                        <h:column>
+                            #{univExperts.org}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script> -->
+    <head>
+        <script type="text/javascript">
+            var closeID=(id)=>{
+                document.getElementById(id).style.display = "none";
+            }
+            var openID=(id)=>{
+                document.getElementById(id).style.display = "block";
+            }
+            var GetZapros=()=>{
+                var request = new XMLHttpRequest();
+                function reqReadyStateChange() {
+                    if (request.status == 200) {
+                        document.getElementById("getResult").innerHTML=request.responseText;
+                    }
+                }
+                // строка с параметрами для отправки
+                var params = "firstnum=" + 31+ "&Secondnum=" + 412;
+                request.open("GET", "getResult.php?"+params);
+                request.onreadystatechange = reqReadyStateChange;
+                request.send();
+            }
+        </script>
+        <style type="text/css">
+            #all{
+                width: 100%;
+                height: 97.5vh;
+                background: #f8f9fa;
+            }
+            #MainMenu{
+                width: calc(100% - 60px);
+                margin-left: 30px;
+                height: 75px;
+                border-radius: 10px;
+                background: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+            }
+            #SiteSearch{
+                margin-top: calc(37.5px - 18.75px);
+                float: right;
+                margin-right: 30px;
+                height: 50%;
+                width: 50px;
+                background: #fff;
+                border-radius: 5px;
+                font-size: 18px;
+                color: #021B79;
+                transition: 0.5s;
+            }
+            #SiteSearch:focus{
+                outline: none;
+                width: 300px;
+            }
+            #off{
+                width: 75px;
+                height: 75px;
+                background: #ff6666;
+                float:right;
+            }
+            #off:hover{
+                cursor: pointer;
+            }
+            #getResult{
+                width: 100%;
+                height: 75px;
+                background: #aa66aa; 
+            }
+            #SearchForm{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: 20%;
+                min-height: calc(100% - 125px);
+                float: left;
+                margin-top: 15px;
+                margin-left: 30px;
+                margin-right: 5px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                padding:10px;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+                float:left;
+            }
+            #SearchResult{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: calc(100% - 20% - 60px - 10px - 40px - 20px);
+                height: calc(100% - 125px);
+                margin-top: 15px;
+                margin-left: 5px;
+                margin-right: 30px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+            }
+            #DisplayData{
+                width: 100%;
+                margin-top: 40px;
+                height: calc(100% - 40px);
+                overflow: auto;
+            }
+            .FormBlok{
+                width: 100%;
+                margin-top: 0px;
+                overflow: hidden;
+            }
+            .TitleText{
+                text-align: center;
+                font-family: arial;
+                font-size: 24px;
+            }
+            .SelectForm{
+                margin-top:5px;
+                width: 100%;
+                height: 30px;
+                font-family: arial;
+                font-size: 14px;
+                border-radius: 5px;
+                border-color: #43CBFF;
+                border-width: 2px;
+                transition: 0.5s;    
+            }
+            .SelectForm:focus,.SelectDataType:focus{
+                outline: none;
+                border-color: #9708CC
+            }
+            .SelectForm:hover,.SelectDataType:hover{
+                cursor: pointer;
+            }
+            hr.style-one {
+                    border: 0;
+                    clear:both;
+                    display:block;
+                    width: 100%;               
+                    height: 3px;
+                    background: -webkit-linear-gradient(left, #ddddff, #7777ff, #ddddff);
+                    margin-top: 13px;
+            }
+            .SelectButton{
+                width: 100%;
+                height: 50px;
+                margin-top: 5px; 
+                border-radius: 10px;
+                background-size: 200% auto;
+                background-image: linear-gradient(to right, #43CBFF 0%, #9708CC 51%, #43CBFF 100%);
+                text-transform: uppercase;
+                font-size: 20px;
+                transition: 0.5s;
+                color: #fff;   
+            }
+            .SelectButton:hover{
+                cursor: pointer;
+                background-position: right center;
+            }
+            .SelectButton:focus{
+                outline: none;
+            }
+            ::-webkit-scrollbar{
+                width: 15px;
+                height: 12px;
+            }
+            ::-webkit-scrollbar-track{
+                -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0) inset;
+                background-color: rgba(0, 0, 0, 0);
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb{
+                border-radius: 10px;
+                background: #9708CC;
+            }
+            .SelectDataType{
+                margin-top:5px;
+                width: calc(100% - 10px); 
+                height: 30px;
+                font-family: arial;
+                font-size: 14px;
+                border-radius: 5px;
+                border-color: #43CBFF;
+                border-width: 2px;
+                transition: 0.5s;
+                margin-left: 5px; 
+                margin-right: 5px; 
+                 
+            }
+            table{
+                margin-top: 5px;
+                margin-bottom: 5px;
+                width: 100%;
+                text-align: center;
+                border: 1px solid #69c;
+                border-radius: 10px;
+            }
+            .Autor{
+                width: 15% 
+            }
+            .Rang{
+                width: 15% 
+            }
+            .TypeOfActivity{
+                width: 20% 
+            }
+            .Critery{
+                width: 25% 
+            }
+            .Date{
+                width: 10% 
+            }
+            .Status{
+                width: 7.5% 
+            }
+            .Points{
+                width: 7.5%  
+            }   
+            .DataArticle{
+                width: calc(100%/3 - 25px); 
+                margin: 10px;
+                height: 300px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                border: 2.5px solid transparent;
+                border-radius:20px;
+                float: left;
+            }
+            .GreenBorder{
+
+            }
+            .WhiteBorder{
+
+            }
+            .RedBorder{
+
+            }
+            th {
+                font-weight: normal;
+                color: #039;
+                padding: 10px 15px;
+            }
+            td {
+                color: #669;
+                border-top: 1px solid #e8edff;
+                padding: 10px 15px;
+            }
+            tr:nth-child(2n) {background: #e8edff;}
+        </style>
+    </head>
+    <body>
+        <div id="all">
+            <div id="MainMenu">
+                <input type="text" name="SiteSearch" id="SiteSearch" placeholder="Поиск"></input>
+                <!-- <img src="img/rgd_emblem.png" onclick="openID('off');">  -->
+                <!-- <div id="off" onclick="GetZapros();">                
+                </div> -->               
+            </div>
+            <div id="SearchForm" >
+                <div class="FormBlok" style="margin-top: 15px">
+                    <div class="TitleText">
+                        Автор
+                    </div>
+                    <input type="text" name="Name" placeholder="Введите имя" class="SelectForm" style="width: calc(100% - 10px)">
+                    <hr class="style-one">
+                </div>
+                <div class="FormBlok">
+                    <div class="TitleText">
+                        Должность   
+                    </div>
+                    <select name="select" size="1" class="SelectForm" >
+                            <option selected value="s1">Статья Web of Sciense</option>
+                            <option value="s2">Статья Scopus</option>
+                            <option value="s3">Участие в работе экспертных советов</option>
+                            <option value="s4">Защита кандидатской диссертации</option>
+                            <option value="s4">Защита докторской диссертации</option>
+                    </select>
+                    <hr class="style-one">
+                </div>
+                <div class="FormBlok">
+                    <div class="TitleText">
+                        Вид деятельности
+                    </div>
+                    <select name="select" size="1" class="SelectForm" >
+                            <option selected value="s1">Культурно-творческая деятельность</option>
+                            <option value="s2">Научно-исследовательская деятельность</option>
+                            <option value="s3">Общественная деятельность</option>
+                            <option value="s4">Спортивная деятельность</option>
+                            <option value="s4">Учебная деятельность</option>
+                    </select>
+                    <hr class="style-one">
+                </div>
+                <div class="FormBlok">
+                    <div class="TitleText">
+                        Критерий
+                    </div>
+                    <select name="select" size="1" class="SelectForm" >
+                            <option selected value="s1">Статья Web of Sciense</option>
+                            <option value="s2">Статья Scopus</option>
+                            <option value="s3">Участие в работе экспертных советов</option>
+                            <option value="s4">Защита кандидатской диссертации</option>
+                            <option value="s4">Защита докторской диссертации</option>
+                    </select>
+                    <hr class="style-one">
+                </div>
+                <div class="FormBlok">
+                    <div class="TitleText">
+                        Период
+                    </div>
+                    <select name="dateBegin" size="1" id="selectdateBegin" class="SelectForm">
+                        <option selected disabled >Начало</option>
+                        <option value="1half2019">1 полугодие 2019</option>
+                        <option value="2half2019">2 полугодие 2019</option>
+                        <option value="1half2020">1 полугодие 2020</option>
+                        <option value="2half2020">2 полугодие 2020</option>
+                    </select>
+                    <select name="date" size="1" id="selectdateEnd" class="SelectForm">
+                        <option selected disabled >Конец</option>
+                        <option value="1half2019">1 полугодие 2019</option>
+                        <option value="2half2019">2 полугодие 2019</option>
+                        <option value="1half2020">1 полугодие 2020</option>
+                        <option value="2half2020">2 полугодие 2020</option>
+                    </select>
+                    <hr class="style-one">
+                </div>
+                <input type="button" name="Name" value="Применить" class="SelectButton">
+            </div>
+            <div id="SearchResult">                
+                <div id="DisplayData">
+                    <table id="TableData">
+                        <tr>
+                            <td class="Autor">Автор</td>
+                            <td class="Rang">Должность</td>
+                            <td class="TypeOfActivity">Вид деятельности</td>
+                            <td class="Critery">Критерий</td>
+                            <td class="Date">Дата добавления</td>
+                            <td class="Status">Состояние</td>
+                            <td class="Points">Баллы</td></tr>
+                        <tr>
+                            <td>1</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>2</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>3</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>4</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>5</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>6</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>7</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>8</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                        <tr>
+                            <td>9</td><td>dasdsa</td><td>S312</td><td>3132</td><td>3132</td><td>3132</td><td>3132</td>
+                        </tr>
+                    </table>
+                    <div id="BlockData">
+                        <div class="DataArticle GreenBorder">
+                            
+                        </div>
+                        <div class="DataArticle WhiteBorder">
+                            
+                        </div>
+                        <div class="DataArticle RedBorder">
+                            
+                        </div>
+                        <div class="DataArticle">
+                            
+                        </div>
+                        <div class="DataArticle">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

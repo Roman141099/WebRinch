@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script> -->
+    <head>
+        <script type="text/javascript">
+            var closeID=(id)=>{
+                document.getElementById(id).style.display = "none";
+            }
+            var openID=(id)=>{
+                document.getElementById(id).style.display = "block";
+            }
+            var GetZapros=()=>{
+                var request = new XMLHttpRequest();
+                function reqReadyStateChange() {
+                    if (request.status == 200) {
+                        document.getElementById("getResult").innerHTML=request.responseText;
+                    }
+                }
+                // строка с параметрами для отправки
+                var params = "firstnum=" + 31+ "&Secondnum=" + 412;
+                request.open("GET", "getResult.php?"+params);
+                request.onreadystatechange = reqReadyStateChange;
+                request.send();
+            }
+        </script>
+        <style type="text/css">
+            #all{
+                width: 100%;
+                height: 100vh;
+                background: #f8f9fa;
+            }
+            #MainMenu{
+                width: calc(100% - 60px);
+                margin-left: 30px;
+                height: 75px;
+                border-radius: 10px;
+                background: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+            }
+            #SiteSearch{
+                margin-top: calc(37.5px - 18.75px);
+                float: right;
+                margin-right: 30px;
+                height: 50%;
+                width: 50px;
+                background: #fff;
+                border-radius: 5px;
+                font-size: 18px;
+                color: #021B79;
+                transition: 0.5s;
+            }
+            #SiteSearch:focus{
+                outline: none;
+                width: 300px;
+            }
+            #off{
+                width: 75px;
+                height: 75px;
+                background: #ff6666;
+                float:right;
+            }
+            #off:hover{
+                cursor: pointer;
+            }
+            #getResult{
+                width: 100%;
+                height: 75px;
+                background: #aa66aa; 
+            }
+            #infoLeft{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: calc(30% - 70px);
+                height: calc(300px - 30px);
+                float: left;
+                margin-top: 15px;
+                margin-left: 30px;
+                margin-right: 5px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                padding:10px;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+            }
+            #infoRight{
+                height: 300px;
+                width: calc(70% - 36px);
+                margin-left: 10px;
+                margin-right: 30px;
+                margin-top: 15px;
+                float: left;
+            }
+            .UserInfo{
+                color: #000;
+                font-size: 24px;
+                font-family: arial;
+                width: 75%;
+                margin-top: 15px;
+                margin-left: calc(50% - 37.5%);
+                overflow: hidden;
+            }
+            #loadOtchet{
+                font-size: 14px;
+                height:50px;
+                color: #000;
+            }
+            #selectVector{
+                height: 50px;
+                margin-bottom: 5px;
+                font-size: 18px;
+            }
+            #dateSelect{
+                padding: 15px;                 
+                border-radius: 20px;
+                margin-right: 10px;
+                box-shadow: 0 0 10px rgba(200,200,200,0.5);
+                width: calc(50% - 50px);                
+                height: calc(300px - 40px); 
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+                float: left;
+            }
+            #Criteries{
+                box-shadow: 0 0 10px rgba(200,200,200,0.5);
+                margin-left: 10px;
+                padding: 15px;
+                padding-left: 20px;
+                width: calc(50% - 55px);                
+                height: calc(300px - 40px); 
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+                float: left;
+            }
+            #dateBegin,#dateEnd{
+                width: calc(50% - 10px);
+                padding: 5px;
+                float: left;
+            }
+            .SelectLable{
+                margin-left: calc(50% - 37.5%);
+                font-size: 14px;
+                font-family: arial;
+                color: #000;
+            }
+            .SelectDate{
+                color: #000;
+                margin-top: 3px;
+                margin-bottom: 10px;
+                height: 50px;
+                width: 100%;
+                font-size: 20px;
+            }
+            .Name{
+                padding-bottom: 10px;
+                width: 100%;
+                text-align: center;
+                font-size: 20px;
+                font-family: arial;
+            }
+            .CriteriesLabale{
+                font-size: 20px;
+                font-family: arial;
+                color: #000;
+                margin-bottom: 12px;
+            }
+            #LeftCriteries,#totalPointsBy{
+                min-height: 90px;
+                width: 80%;
+                float: left;
+            }
+            #RightCriteries,#totalPoints{
+                min-height: 90px;
+                width: 20%;
+                float: left;
+            }
+            #totalPointsBy{
+                margin-top: 12px;
+            }
+            #totalPoints{
+                margin-top: 24px;
+            }
+            hr.style-one {
+                    border: 0;
+                    clear:both;
+                    display:block;
+                    width: 100%;               
+                    height: 2px;
+                    background: -webkit-linear-gradient(left, #ddddff, #7777ff, #ddddff);
+            }
+            .totalPointsLabale{
+                font-size: 24px;
+                font-family: arial;
+            }
+            #PointsTable{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: calc(100% - 70px);
+                height: 280px;
+                float: left;
+                margin-top: 15px;
+                margin-left: 30px;
+                margin-right: 30px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                border: 5px solid transparent;
+                border-radius:21px;
+                display:inline-block;
+                float: left;
+                overflow-y: auto;
+            }
+            .btn-grad {
+                background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+            }
+            .btn-grad {
+                padding: 15px 45px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                border-radius: 10px;
+                display: block;
+                color: #fff;
+            }
+
+            .btn-grad:hover {
+                cursor: pointer;
+                background-position: right center;
+                color: #fff;
+                text-decoration: none;
+            }
+            table{
+                margin-left: 2.5%;
+                margin-right: 0px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                width: 95%;
+                text-align: center;
+                border: 1px solid #69c;
+                border-radius: 10px;
+            }
+            td.Numder{
+                width: 5%
+            }
+            td.Critery{
+                width: 80%;
+            }
+            td.Point{
+                width: 5%
+            }
+            td.Ready{
+                width: 5%
+            }
+            th {
+                font-weight: normal;
+                color: #039;
+                padding: 10px 15px;
+            }
+            td {
+                color: #669;
+                border-top: 1px solid #e8edff;
+                padding: 10px 15px;
+            }
+            tr:nth-child(2n) {background: #e8edff;}
+            #PointsTable::-webkit-scrollbar{
+                width: 10px;
+                height: 12px;
+            }
+            ::-webkit-scrollbar{
+                width: 15px;
+                height: 12px;
+            }
+            ::-webkit-scrollbar-track{
+                -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0) inset;
+                background-color: rgba(0, 0, 0, 0) inset;
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb{
+                border-radius: 10px;
+                background: #9708CC;
+            }
+            #loadOtchet:focus{
+                outline: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="all">
+            <div id="MainMenu">
+                <input type="text" name="SiteSearch" id="SiteSearch" placeholder="Поиск"></input>
+                <!-- <img src="img/rgd_emblem.png" onclick="openID('off');">  -->
+                <!-- <div id="off" onclick="GetZapros();">                
+                </div> -->               
+            </div>
+            <div id="UserInfo" >
+                <div>
+                <div id="infoLeft" class="UserInfo">
+                    <div id="infoFIO" class="UserInfo">
+                        Волхонский Андрей Николаевич
+                    </div>
+                    <div id="Points" class="UserInfo" style="margin-top:5px; margin-bottom: 15px;">
+                        Всего баллов: 411
+                    </div>
+                    <div class="SelectLable">Вид деятельности</div>
+                    <select name="select" size="1" class="UserInfo" id="selectVector" style="margin-top: 3px; color: #000;">
+                            <option selected value="s1">Культурно-творческая деятельность</option>
+                            <option value="s2">Научно-исследовательская деятельность</option>
+                            <option value="s3">Общественная деятельность</option>
+                            <option value="s4">Спортивная деятельность</option>
+                            <option value="s4">Учебная деятельность</option>
+                    </select>
+                    <input id="loadOtchet" type="button" closeID('all');" name="LoadOtchet" value="Выгрузить отчет" class="btn-grad UserInfo" style="color: #fff; font-size: 18px">
+                </div>
+                </div>              
+                <div id="infoRight">
+                    <div id="dateSelect">
+                        <div class="Name">
+                        Выбрать период
+                        </div>
+                        <div id="dateBegin">
+                            <div class="SelectLable" style="margin-left: 0px">Дата Начало</div>
+                            <select name="dateBegin" size="1" id="selectdateBegin" class="SelectDate">
+                                <option selected value="1half2019">1 полугодие 2019</option>
+                                <option value="2half2019">2 полугодие 2019</option>
+                                <option selected value="1half2020">1 полугодие 2020</option>
+                                <option value="2half2020">2 полугодие 2020</option>
+                            </select>
+                        </div>
+                        <div id="dateEnd">
+                            <div class="SelectLable" style="margin-left: 0px">Дата конец </div>
+                            <select name="date" size="1" id="selectdateEnd" class="SelectDate">
+                                <option selected value="1half2019">1 полугодие 2019</option>
+                                <option value="2half2019">2 полугодие 2019</option>
+                                <option selected value="1half2020">1 полугодие 2020</option>
+                                <option value="2half2020">2 полугодие 2020</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="Criteries">
+                        <div class="Name">
+                            Критерии
+                        </div>
+                        <div id="LeftCriteries" class="CriteriesLabale">
+                            <div>Всего:</div>
+                            <div>Принято:</div>
+                            <div>На проверке:</div>
+                            <div>Отказано:</div>
+                        </div>
+                        <div id="RightCriteries" class="CriteriesLabale">
+                            <div id="AllPoints">2</div>
+                            <div id="AgreePoints">3</div>
+                            <div id="OnCheckPoints">4</div>
+                            <div id="BackPoints">5</div>
+                        </div>
+                        <hr class="style-one">
+                        <div id="totalPointsBy" class="totalPointsLabale">
+                            Баллов по
+                            <div id="VectorName">научной деятельности</div>
+                        </div>
+                        <div id="totalPoints" class="totalPointsLabale">
+                            25
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="PointsTable">
+                <table>
+                    <tr><td class="Numder">№</td><td class="Critery">Критерий</td><td class="Point">Балл</td><td class="Ready">Проверено</td></tr>
+                    <tr>
+                        <td>1</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>2</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>3</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>4</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>5</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>6</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>7</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>8</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                    <tr>
+                        <td>9</td><td>dasdsa</td><td>S312</td><td>3132</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

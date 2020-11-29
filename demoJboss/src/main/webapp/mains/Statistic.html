@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            var closeID=(id)=>{
+                document.getElementById(id).style.display = "none";
+            }
+            var openID=(id)=>{
+                document.getElementById(id).style.display = "block";
+            }
+            var GetZapros=()=>{
+                var request = new XMLHttpRequest();
+                function reqReadyStateChange() {
+                    if (request.status == 200) {
+                        document.getElementById("getResult").innerHTML=request.responseText;
+                    }
+                }
+                // строка с параметрами для отправки
+                var params = "firstnum=" + 31+ "&Secondnum=" + 412;
+                request.open("GET", "getResult.php?"+params);
+                request.onreadystatechange = reqReadyStateChange;
+                request.send();
+            }
+            var getRandomInt=(max)=>{
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+            var gGenerateStatisticData=(NumValues,MinValue=200,MaxValue=1000)=>{
+                var testdata = [];
+                for(var i=0; i<50; i++){
+                    testdata.push([2000+i,MinValue+getRandomInt(MaxValue)]);
+                }
+                return(testdata);
+            }
+            var PrintStatistic=(id,inpdata = [[2011,1000],[2012,2000]],xName = 'Year',yName = 'Величина', DiagramName = "Статистика")=>{  //В эту поебень приходит id элемента и туда ебошится статистика
+                    if(xName==0)xName='Year';
+                    if(yName==0)yName='Величина';
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+                    inpdata.unshift([xName,yName]);
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable(inpdata);
+                        var options = {
+                          title: DiagramName,
+                          hAxis: {title: xName,  titleTextStyle: {color: '#333'}},
+                          vAxis: {minValue: 0},
+                          legend: 'none',
+                          backgroundColor: 'none',
+                        };
+                        var chart = new google.visualization.AreaChart(document.getElementById(id));
+                        chart.draw(data, options);
+                      }
+                }
+            var AddBigStatistic=()=>{
+
+            }
+            PrintStatistic("Stat1",gGenerateStatisticData(20),0,0,);
+            PrintStatistic("Stat2",gGenerateStatisticData(30),0,0);
+            PrintStatistic("Stat3",gGenerateStatisticData(40),0,0);
+            PrintStatistic("Stat4",gGenerateStatisticData(1000),0,0);
+            PrintStatistic("Stat5",gGenerateStatisticData(200),0,0);
+            PrintStatistic("Stat6",gGenerateStatisticData(20),0,0);
+            PrintStatistic("Stat7",gGenerateStatisticData(30),0,0);
+            PrintStatistic("Stat8",gGenerateStatisticData(40),0,0);
+            PrintStatistic("Stat9",gGenerateStatisticData(1000),0,0);
+            PrintStatistic("Stat10",gGenerateStatisticData(200),0,0);
+            document.addEventListener("DOMContentLoaded", function(event)
+            {
+                window.onresize = function() {
+                    PrintStatistic("Stat1",gGenerateStatisticData(20),0,0);
+                    PrintStatistic("Stat2",gGenerateStatisticData(30),0,0);
+                    PrintStatistic("Stat3",gGenerateStatisticData(40),0,0);
+                    PrintStatistic("Stat4",gGenerateStatisticData(1000),0,0);
+                    PrintStatistic("Stat5",gGenerateStatisticData(200),0,0);
+                    PrintStatistic("Stat6",gGenerateStatisticData(20),0,0);
+                    PrintStatistic("Stat7",gGenerateStatisticData(30),0,0);
+                    PrintStatistic("Stat8",gGenerateStatisticData(40),0,0);
+                    PrintStatistic("Stat9",gGenerateStatisticData(1000),0,0);
+                    PrintStatistic("Stat10",gGenerateStatisticData(200),0,0);
+                };
+            });
+        </script>
+        <style type="text/css">
+            #all{
+                width: 100%;
+                height: 97.5vh;
+                background: #f8f9fa;
+            }
+            #MainMenu{
+                width: calc(100% - 60px);
+                margin-left: 30px;
+                height: 75px;
+                border-radius: 10px;
+                background: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+            }
+            #SiteSearch{
+                margin-top: calc(37.5px - 18.75px);
+                float: right;
+                margin-right: 30px;
+                height: 50%;
+                width: 50px;
+                background: #fff;
+                border-radius: 5px;
+                font-size: 18px;
+                color: #021B79;
+                transition: 0.5s;
+            }
+            #SiteSearch:focus{
+                outline: none;
+                width: 300px;
+            }
+            #Statistic{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: calc(100% - 60px - 20px - 10px);
+                min-height: calc(100% - 125px);
+                float: left;
+                margin-top: 15px;
+                margin-left: 30px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                padding:10px;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+                float:left;
+            }
+            .StatisticFrame{
+                background: 
+                    linear-gradient(#eef,#eef) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                margin: 10px;
+                bottom: 15px;
+                padding:10px;
+                border: 5px solid transparent;
+                border-radius:20px;
+                float: left;
+
+            }
+            .DobleSmall{
+                width: calc(100%/3);
+                float: left;
+            }
+            .DobleSmallStatistic{
+                width: calc(100% - 20px - 20px - 10px);
+                height: calc(150px - 15px - 10px + 0.1px);
+            }
+            .BigStatistic{
+                width: calc(100%/3*2 - 20px - 20px - 10px);
+                height: 300px;
+
+            }
+            .MediumStatistic{
+                width: calc(100%/3 - 20px - 20px - 10px);
+                height: 300px;                 
+            }
+            .SmallStatistic{
+                width: calc(100%/3 - 20px - 20px - 10px);
+                height: calc(150px - 15px - 10px + 0.1px);
+            } 
+            ::-webkit-scrollbar{
+                width: 15px;
+                height: 12px;
+            }
+            ::-webkit-scrollbar-track{
+                -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0) inset;
+                background-color: rgba(0, 0, 0, 0);
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background: #9708CC;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="all">
+            <div id="MainMenu">
+                <input type="text" name="SiteSearch" id="SiteSearch" placeholder="Поиск"></input>
+                <!-- <img src="img/rgd_emblem.png" onclick="openID('off');">  -->
+                <!-- <div id="off" onclick="GetZapros();">                
+                </div> -->               
+            </div>
+            <div id="Statistic">
+                <div class="BigStatistic StatisticFrame" id="Stat1"></div>
+                <div class="SmallStatistic StatisticFrame" id="Stat2"></div>
+                <div class="SmallStatistic StatisticFrame" id="Stat4"></div>
+                <div class="DobleSmall">
+                    <div class="DobleSmallStatistic StatisticFrame" id="Stat7"></div>
+                    <div class="DobleSmallStatistic StatisticFrame" id="Stat3"></div> 
+                </div>
+                <div class="MediumStatistic StatisticFrame" id="Stat6"></div>                              
+                <div class="SmallStatistic StatisticFrame" id="Stat8"></div>
+                <div class="SmallStatistic StatisticFrame" id="Stat9"></div>
+                <div class="BigStatistic StatisticFrame" id="Stat10"></div>
+            </div>
+        </div>
+    </body>
+</html>
